@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker</title>
+
+    <!-- Tailwind daisyUI -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- google font (geist) -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+     <!-- font awesome CDN -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+     <!-- internal CSS  -->
+      <style>
+        *{
+            font-family: "Geist", sans-serif;
+        }
+      </style>
+</head>
+<body class="min-h-screen bg-base-200">
+
+    <!-- Header section -->
+
+     <header class="pt-6 pr-36 pb-20 pl-12">
+
+        <!-- Header Title -->
+     <h1 class="text-[32px] text-[#002C5C] font-bold ">Job Application Tracker</h1>
+
+        <!-- cards of Header -->
+     <div class="grid grid-cols-3 gap-6 mt-4">
+
+        <!-- card/total -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <p class="text-info-content font-medium">Total</p>
+            <h2 class="text-2xl text-info-content font-bold">8</h2>
+        </div>
+
+        <!-- card/Interview -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <p class=" text-info-content font-medium">Interview</p>
+            <h2 class="text-2xl text-primary font-bold">0</h2>
+        </div>
+
+        <!-- card/ Rejected -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <p class="text-info-content font-medium">Rejected</p>
+            <h2 class="text-2xl text-error font-bold">0</h2>
+        </div>
+     </div> 
+
+     </header>
+
+    
+     <div class="pr-36 pb-5 pl-12 flex justify-between">
+            <h2 class="text-2xl font-semibold text-[#002C5C]">Available jobs</h2>
+            <span class="text-[#64748B] font-medium">8 Jobs</span>
+     </div>
+
+     <div class="pr-36 pb-5 pl-12 flex gap-3">
+
+            <button class="btn btn-primary rounded-md px-10">All</button>
+
+            <button class="btn btn-soft bg-white rounded-md">
+                <span class="text-[#64748B]">Interview</span></button>
+
+            <button class="btn btn-soft bg-white rounded-md">
+                <span class="text-[#64748B]">Rejected</span></button>
+     </div>
+
+     <div id="job-list" class="pl-12 pr-36 pb-20 space-y-6">
+     </div>
+
+     <script src="script.js"></script>
+    </body>
