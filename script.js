@@ -92,6 +92,19 @@ let jobs = [
 function injectJobs(){
     const jobList = document.getElementById('job-list');
 
+    let interviewCount = 0;
+    let rejectedCount = 0;
+
+    for (let job of jobs) {
+        if (job.status === 'interview') interviewCount++;
+        else if (job.status === 'rejected') rejectedCount++;
+    }
+
+    // Update Dashboard (Make sure these IDs exist in your HTML)
+    document.getElementById('total-count').innerText = jobs.length;
+    document.getElementById('interview-count').innerText = interviewCount;
+    document.getElementById('rejected-count').innerText = rejectedCount;
+
     //2. checking the empty list
     if(jobs.length === 0){
         jobList.innerHTML = `
@@ -104,14 +117,15 @@ function injectJobs(){
 
 // 3. creating space to hold HTML
 let htmlStorage = '';
+
 //  4. the loop to check every jobs in list
 for(let job of jobs){
 
     // 5.injecting the HTML from js
    htmlStorage += `
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 relative mb-6">
+        <div class="bg-white rounded-2xl shadow-sm p-8 mb-6">
             
-            <div class="flex justify-between items-start">
+            <div class="flex justify-between">
                 <div>
                     <h2 class="text-xl font-bold text-[#002C5C]">${job.companyName}</h2>
                     <p class="font-semibold text-[#64748B]">${job.position}</p>
@@ -131,20 +145,20 @@ for(let job of jobs){
             </div>
 
             <div class="mt-4">
-                <span class="bg-[#EEF4FF] text-[#355D9B] px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider">
+                <span class="bg-[#EEF4FF] text-[#355D9B] px-4 py-1.5 rounded-md text-xs font-bold uppercase">
                     NOT APPLIED
                 </span>
             </div>
 
-            <p class="text-[#475569] text-sm mt-5 leading-relaxed max-w-4xl">
+            <p class="text-[#475569] text-sm mt-3">
                 ${job.description}
             </p>
 
-            <div class="mt-8 flex gap-3">
-                <button class="btn btn-outline btn-success btn-sm px-6 border-2 font-bold rounded-lg hover:text-white">
+            <div class="mt-6 flex gap-3">
+                <button onclick="updateStatus(${job.id}, 'interview')" class="btn btn-outline btn-success btn-sm px-6 border-2 font-bold rounded-lg hover:text-white">
                     INTERVIEW
                 </button>
-                <button class="btn btn-outline btn-error btn-sm px-6 border-2 font-bold rounded-lg hover:text-white">
+                <button onclick="updateStatus(${job.id}, 'rejected')" class="btn btn-outline btn-error btn-sm px-6 border-2 font-bold rounded-lg hover:text-white">
                     REJECTED
                 </button>
             </div>
@@ -155,4 +169,27 @@ jobList.innerHTML = htmlStorage;
 // console.log('injection done')
 
 }
+
+// function for job id new status
+function updateStatus(id, newStatus){
+    // console.log("Button clicked!);
+    for(let job of jobs){
+        if(job.id === id){
+            job.status = newStatus
+        }
+    }
+   injectJobs()
+}
 injectJobs()
+
+
+// function to delete by trashbin icon
+function deleteCard(id) {
+    console.log("Delete requested for Job ID:", id);
+    jobs = jobs.filter(function(job) {
+        return job.id !== id;
+    });
+
+    injectJobs();
+}
+
