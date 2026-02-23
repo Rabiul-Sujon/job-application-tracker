@@ -1,6 +1,6 @@
-
-// jobs array
-let jobs = [
+ let currentFilter = 'all';
+ // jobs array
+ let jobs = [
     {
         id : 1,
         companyName : 'Airbnb',
@@ -48,7 +48,7 @@ let jobs = [
         location: "On-site",
         type: "Full Time",
         salary: "$130000-175000",
-        status: "all",
+        status: "Not Applied",
         description: "Secure crypto mobile systems.",
         
       },
@@ -59,7 +59,7 @@ let jobs = [
         location: "Hybrid",
         type: "Full Time",
         salary: "$133000-145000",
-        status: "all",
+        status: "Not Applied",
         description: "Ride sharing mobile systems.",
         
       },
@@ -70,7 +70,7 @@ let jobs = [
         location: "Remote",
         type: "Full Time",
         salary: "$140000-175000",
-        status: "all",
+        status: "Not Applied",
         description: "Performance focused mobile UI.",
         
       },
@@ -81,7 +81,7 @@ let jobs = [
         location: "Hybrid",
         type: "Full Time",
         salary: "$140000-155000",
-        status: "all",
+        status: "Not Applied",
         description: "Secure payment systems.",
         
       },
@@ -89,7 +89,7 @@ let jobs = [
   
 
 // 1.creating function to push the jobs in HTML-id
-function injectJobs(){
+function injectJobs(listToRender = jobs){
     const jobList = document.getElementById('job-list');
 
     let interviewCount = 0;
@@ -100,28 +100,34 @@ function injectJobs(){
         else if (job.status === 'rejected') rejectedCount++;
     }
 
-    // Update Dashboard (Make sure these IDs exist in your HTML)
+    // Update Dashboard 
     document.getElementById('total-count').innerText = jobs.length;
     document.getElementById('interview-count').innerText = interviewCount;
     document.getElementById('rejected-count').innerText = rejectedCount;
 
+    // count job tab by tab
+     const countSpan = document.getElementById('showing-count-text');
+        if (countSpan) {
+        countSpan.innerText = `${listToRender.length} Jobs`;
+    }
+
     //2. checking the empty list
-    if(jobs.length === 0){
+    if(listToRender.length === 0){
         jobList.innerHTML = `
             <div class="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
                 <img src="/jobs.png" alt="png image" class="mx-auto mb-4 w-48">
                 <h3 class="text-xl font-bold text-gray-400">No Jobs Available</h3>
             </div>`;
-            return; //if empty stop here
+            return; //if empty stop here.
     }
 
-// 3. creating space to hold HTML
+// 3. creating space to hold HTML.
 let htmlStorage = '';
 
-//  4. the loop to check every jobs in list
-for(let job of jobs){
+//  4. the loop to check every jobs in list.
+for(let job of listToRender){
 
-    // 5.injecting the HTML from js
+    // 5.injecting the HTML from js.
    htmlStorage += `
         <div class="bg-white rounded-2xl shadow-sm p-8 mb-6">
             
@@ -145,9 +151,9 @@ for(let job of jobs){
             </div>
 
             <div class="mt-4">
-                <span class="bg-[#EEF4FF] text-[#355D9B] px-4 py-1.5 rounded-md text-xs font-bold uppercase">
-                    NOT APPLIED
-                </span>
+               <span class="bg-[#EEF4FF] text-[#355D9B] px-4 py-1.5 rounded-md text-xs font-bold uppercase">
+                ${job.status}
+               </span>
             </div>
 
             <p class="text-[#475569] text-sm mt-3">
@@ -170,20 +176,20 @@ jobList.innerHTML = htmlStorage;
 
 }
 
-// function for job id new status
+// function for job id new status.
 function updateStatus(id, newStatus){
-    // console.log("Button clicked!);
     for(let job of jobs){
         if(job.id === id){
-            job.status = newStatus
+            job.status = newStatus;
         }
     }
-   injectJobs()
+    // Instead of showing ALL, show jobs on current filter.
+    filteredJobs(currentFilter); 
 }
 injectJobs()
 
 
-// function to delete by trashbin icon
+// function to delete by trashbin icon from list.
 function deleteCard(id) {
     console.log("Delete requested for Job ID:", id);
     jobs = jobs.filter(function(job) {
@@ -192,4 +198,21 @@ function deleteCard(id) {
 
     injectJobs();
 }
+
+function filteredJobs(category){
+    currentFilter = category; // Remember what i clicked.
+    
+    if(category === 'all'){
+        injectJobs(jobs);
+        return;
+    }
+    const filteredList = jobs.filter(job => job.status.toLowerCase() === category.toLowerCase());
+    injectJobs(filteredList);
+}
+injectJobs();
+
+
+
+
+
 
