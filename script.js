@@ -121,7 +121,7 @@ function injectJobs(listToRender = jobs){
             return; //if empty stop here.
     }
 
-// 3. creating space to hold HTML.
+// 3. creating space for HTML.
 let htmlStorage = '';
 
 //  4. the loop to check every jobs in list.
@@ -183,7 +183,7 @@ function updateStatus(id, newStatus){
             job.status = newStatus;
         }
     }
-    // Instead of showing ALL, show jobs on current filter.
+    // show jobs on current filter. Instead of showing ALL, 
     filteredJobs(currentFilter); 
 }
 injectJobs()
@@ -199,13 +199,17 @@ function deleteCard(id) {
     injectJobs();
 }
 
+// filter the job list
+
 function filteredJobs(category){
     currentFilter = category; // Remember what i clicked.
-    
+
+    // show full list for all tab
     if(category === 'all'){
         injectJobs(jobs);
         return;
     }
+    // new list for match button
     const filteredList = jobs.filter(job => job.status.toLowerCase() === category.toLowerCase());
     injectJobs(filteredList);
 }
